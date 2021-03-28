@@ -1,0 +1,18 @@
+
+= node rpm
+
+== aliyun
+
+http://npm.taobao.org/
+http://redistry.npm.taobao.org/
+
+[source, shell script]
+----
+npm install -g cnpm --registry=http://registry.npm.taobao.org
+
+----
+
+== central
+
+http://cnpmjs.org/
+http://r.cnpmjs.org/

@@ -1,0 +1,17 @@
+
+= node script
+
+npm link
+[source,cmd]
+----
+@echo off
+
+call data\link-file.cmd
+
+set target="%userprofile%\AppData\Roaming\npm-cache"
+set source="%~dp0data\cache"
+call data\link-dir-prompt.cmd
+
+pause >nul
+
+----

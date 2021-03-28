@@ -1,0 +1,4 @@
+root: D:\Program\dev\platform\node\nvm
+path: D:\Program\dev\platform\node\nodejs
+node_mirror: https://nexus.local.c332030.com/repository/node-public/
+npm_mirror: https://nexus.local.c332030.com/repository/npm-public/

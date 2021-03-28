@@ -1,0 +1,14 @@
+
+= npm config
+
+.npmrc
+[source,cmd]
+----
+
+metrics-registry = "https://nexus.local.c332030.com/repository/npm-registry-public/"
+registry = "https://nexus.local.c332030.com/repository/npm-registry-public/"
+
+cache=D:\program\dev\platform\node\nodejs\data\cache
+prefix=D:\program\dev\platform\node\nodejs\data\prefix
+
+----
