@@ -1,14 +1,22 @@
 
-= npm config
+= npm conf
 
-.npmrc
-[source,cmd]
+== taobao
+
+[source,shell script]
 ----
 
-metrics-registry = "https://nexus.local.c332030.com/repository/npm-registry-public/"
-registry = "https://nexus.local.c332030.com/repository/npm-registry-public/"
+npm config set registry=https://registry.npm.taobao.org
+npm config set sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+npm config set phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs/
+npm config set electron_mirror=https://npm.taobao.org/mirrors/electron/
+----
 
-cache=D:\program\dev\platform\node\nodejs\data\cache
-prefix=D:\program\dev\platform\node\nodejs\data\prefix
-
+[source,text]
+----
+registry=https://registry.npm.taobao.org/
+metrics-registry=https://registry.npm.taobao.org
+sass_binary_site=https://npm.taobao.org/mirrors/node-sass
+phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs
+electron_mirror=https://npm.taobao.org/mirrors/electron
 ----
