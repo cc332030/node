@@ -1,0 +1,9 @@
+
+= npm
+
+[source,shell script]
+----
+# python support
+npm i windows-build-tools -g
+
+----
