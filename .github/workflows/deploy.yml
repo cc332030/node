@@ -3,9 +3,11 @@ name: deploy
 
 on:
   workflow_call:
-    secrets:
-      NODE_VERSION:
+    inputs:
+      node-version:
         required: false
+        type: string
+    secrets:
       SSH_PRIVATE_KEY:
         required: true
       HOST:
@@ -32,11 +34,9 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
-        if: env.NODE_VERSION != null
-        env:
-          NODE_VERSION: ${{ secrets.NODE_VERSION }}
+        if: "${{ github.event.inputs.node-version != '' }}"
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ inputs.node-version }}
       - name: build
         run: npm i && npm run build
       - name: init-ssh-pre
