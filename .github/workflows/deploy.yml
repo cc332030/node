@@ -32,13 +32,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: cache
+        uses: actions/cache@v2
         with:
           key: cache
           path: |
             node_modules
-      - uses: actions/setup-node@v2
+      - name: setup-node
+        uses: actions/setup-node@v2
         if: env.NODE_VERSION != null
         env:
           NODE_VERSION: ${{ inputs.node-version }}
