@@ -4,6 +4,8 @@ name: deploy
 on:
   workflow_call:
     secrets:
+      NODE_VERSION:
+        required: false
       SSH_PRIVATE_KEY:
         required: true
       HOST:
@@ -30,8 +32,9 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
+        if: secrets.NODE_VERSION != ''
         with:
-          node-version: '16'
+          node-version: ${{ secrets.NODE_VERSION }}
       - name: build
         run: npm i && npm run build
       - name: init-ssh-pre
