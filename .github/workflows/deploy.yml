@@ -34,9 +34,11 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
-        if: github.event.inputs.node-version != ''
+        if: env.NODE_VERSION != null
+        env:
+          NODE_VERSION: ${{ inputs.node-version }}
         with:
-          node-version: ${{ inputs.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
       - name: build
         run: npm i && npm run build
       - name: init-ssh-pre
