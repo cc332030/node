@@ -34,7 +34,7 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
-        if: "${{ github.event.inputs.node-version != '' }}"
+        if: github.event.inputs.node-version != ''
         with:
           node-version: ${{ inputs.node-version }}
       - name: build
