@@ -32,7 +32,7 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
-        if: secrets.NODE_VERSION != ''
+        if: env.NODE_VERSION != null
         with:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: build
