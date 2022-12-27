@@ -31,8 +31,9 @@ jobs:
           key: cache
           path: |
             node_modules
+      - run: echo $NODE_VERSION | base64
       - uses: actions/setup-node@v2
-        if: env.NODE_VERSION != null
+        if: env.NODE_VERSION != ''
         with:
           node-version: ${{ secrets.NODE_VERSION }}
       - name: build
