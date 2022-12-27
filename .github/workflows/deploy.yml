@@ -32,9 +32,11 @@ jobs:
           path: |
             node_modules
       - uses: actions/setup-node@v2
-        if: ${{ secrets.NODE_VERSION != null }}
+        if: env.NODE_VERSION != null
+        env:
+          NODE_VERSION: ${{ secrets.NODE_VERSION }}
         with:
-          node-version: ${{ secrets.NODE_VERSION }}
+          node-version: ${{ env.NODE_VERSION }}
       - name: build
         run: npm i && npm run build
       - name: init-ssh-pre
