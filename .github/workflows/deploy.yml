@@ -49,7 +49,7 @@ jobs:
       - id: generate-name
         name: Generate artifact name
         run: |
-          echo "::set-output name=artifact::${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}"
+          echo "{artifact}=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_ENV
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
