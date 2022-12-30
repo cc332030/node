@@ -46,14 +46,14 @@ jobs:
           node-version: ${{ inputs.node-version }}
       - name: build
         run: npm i && npm run build
-      - id: generate-name
-        name: Generate artifact name
+      - id: artifact-name
+        name: artifact-name
         run: |
-          echo "artifact=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_ENV
+          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.artifact }}
+          name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: |
             build
       - name: init-ssh-pre
