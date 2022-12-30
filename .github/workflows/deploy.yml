@@ -53,7 +53,7 @@ jobs:
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ steps.generate-name.outputs.artifact }}
+          name: ${{ env.artifact }}
           path: |
             build
       - name: init-ssh-pre
