@@ -9,7 +9,7 @@ call link-dir "%~dp0app" "%NVM_HOME%"
 
 call link-dir "%~dp0data\prefix" "%~dp0app\prefix"
 
-call link-dir "f:\build\node\cache" "%userprofile%\AppData\Local\npm-cache"
+call link-dir "F:\data\node\cache" "%userprofile%\AppData\Local\npm-cache"
 
 call link-file "%~dp0data" "%userprofile%" ".npmrc"
 
