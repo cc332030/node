@@ -1,0 +1,14 @@
+
+= node
+
+docker run
+[source,shell]
+----
+
+docker run --rm \
+    -v "$(pwd)":/data \
+    -w /data \
+    node:18 \
+    npm i && npm run build
+
+----
