@@ -20,6 +20,10 @@ on:
       action-command:
         required: false
         type: string
+      artifact-path:
+        required: false
+        type: string
+        default: build
       multi-module:
         required: false
         type: string
@@ -57,8 +61,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
-          path: |
-            build
+          path: ${{ inputs.artifact-path }}
       - name: init-ssh-pre
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-pre.sh | sudo sh
       - name: init-ssh
