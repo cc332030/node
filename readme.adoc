@@ -9,6 +9,6 @@ docker run --rm \
     -v "$(pwd)":/data \
     -w /data \
     node:18 \
-    npm i && npm run build
+    sh -c "npm i && npm run build"
 
 ----
