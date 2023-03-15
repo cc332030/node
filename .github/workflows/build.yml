@@ -22,6 +22,7 @@ jobs:
             node_modules
       - name: setup-node
         uses: actions/setup-node@v3
+        if: ${{ inputs.node-version != '' }}
         with:
           node-version: ${{ inputs.node-version }}
       - name: build
