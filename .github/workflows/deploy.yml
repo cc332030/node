@@ -20,13 +20,14 @@ on:
       action-command:
         required: false
         type: string
-      artifact-path:
-        required: false
-        type: string
-        default: build
       multi-module:
         required: false
         type: string
+      artifact-path:
+        required: false
+        type: string
+        default: |
+          build
     secrets:
       SSH_PRIVATE_KEY:
         required: true
