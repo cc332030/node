@@ -36,9 +36,6 @@ on:
       PORT:
         required: true
 
-env:
-  NODE_ENV: production
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -57,6 +54,8 @@ jobs:
           node-version: ${{ inputs.node-version }}
       - name: build
         run: npm i && npm run build
+        env:
+          NODE_ENV: production
       - id: artifact-name
         name: artifact-name
         run: |
