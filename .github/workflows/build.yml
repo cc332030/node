@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: volta
         uses: volta-cli/action@v4
         with:
           node-version: ${{ inputs.node-version }}
       - name: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json') }}
           path: |
@@ -36,7 +36,7 @@ jobs:
         run: |
           echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
       - name: upload-artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifact-name.outputs.artifact-name }}
           path: ${{ inputs.artifact-path }}
