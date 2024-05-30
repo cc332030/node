@@ -17,6 +17,10 @@ on:
       prepare-command:
         required: false
         type: string
+      build-command:
+        required: false
+        type: string
+        default: npm i && npm run build
       action-command:
         required: false
         type: string
@@ -49,11 +53,11 @@ jobs:
       - name: cache
         uses: actions/cache@v4
         with:
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json') }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
             node_modules
       - name: build
-        run: npm i && npm run build
+        run: ${{ inputs.origin-path }}
       - id: artifact-name
         name: artifact-name
         run: |
