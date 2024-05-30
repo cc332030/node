@@ -57,7 +57,7 @@ jobs:
           path: |
             node_modules
       - name: build
-        run: ${{ inputs.origin-path }}
+        run: ${{ inputs.build-command }}
       - id: artifact-name
         name: artifact-name
         run: |
