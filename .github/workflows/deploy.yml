@@ -56,6 +56,9 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
             node_modules
+      - name: setup pnpm
+        if: ${{ startsWith(inputs.build-command, 'pnpm') }}
+        uses: pnpm/action-setup@v4
       - name: build
         run: ${{ inputs.build-command }}
       - id: artifact-name
