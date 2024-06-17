@@ -3,12 +3,11 @@
 
 == aliyun
 
-http://npm.taobao.org/
-http://redistry.npm.taobao.org/
+http://npmmirror.com/
 
 [source, shell script]
 ----
-npm install -g cnpm --registry=http://registry.npm.taobao.org
+npm install -g cnpm --registry=http://npmmirror.com
 
 ----
 
