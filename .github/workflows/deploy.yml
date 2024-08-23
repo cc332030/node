@@ -14,6 +14,7 @@ on:
       pnpm-version:
         required: false
         type: string
+        default: latest
       origin-path:
         required: false
         type: string
