@@ -11,6 +11,9 @@ on:
         required: false
         type: string
         default: package.json
+      pnpm-version:
+        required: false
+        type: string
       origin-path:
         required: false
         type: string
@@ -62,6 +65,8 @@ jobs:
       - name: setup-pnpm
         if: ${{ startsWith(inputs.build-command, 'pnpm') }}
         uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
       - name: build
         run: ${{ inputs.build-command }}
       - id: artifact-name
