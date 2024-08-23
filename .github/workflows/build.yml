@@ -7,6 +7,18 @@ on:
       node-version:
         required: false
         type: string
+      node-version-file:
+        required: false
+        type: string
+        default: package.json
+      pnpm-version:
+        required: false
+        type: string
+        default: latest
+      build-command:
+        required: false
+        type: string
+        default: npm i && npm run build
       artifact-path:
         required: false
         type: string
@@ -19,18 +31,24 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
-      - name: volta
-        uses: volta-cli/action@v4
+      - name: setup-node
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+          node-version-file: ${{ inputs.node-version-file }}
       - name: cache
         uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json') }}
           path: |
             node_modules
+      - name: setup-pnpm
+        if: ${{ startsWith(inputs.build-command, 'pnpm') }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
       - name: build
-        run: npm i && npm run build
+        run: ${{ inputs.build-command }}
       - id: artifact-name
         name: artifact-name
         run: |
