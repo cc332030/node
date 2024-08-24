@@ -57,17 +57,17 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           node-version-file: ${{ inputs.node-version-file }}
+      - name: setup-pnpm
+        if: ${{ startsWith(inputs.build-command, 'pnpm') }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
       - name: cache
         uses: actions/cache@v4
         with:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
             node_modules
-      - name: setup-pnpm
-        if: ${{ startsWith(inputs.build-command, 'pnpm') }}
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ inputs.pnpm-version }}
       - name: build
         run: ${{ inputs.build-command }}
       - id: artifact-name
