@@ -38,6 +38,9 @@ on:
       artifact-path:
         required: false
         type: string
+      version-command:
+        required: false
+        type: string
       commit-build:
         required: false
         type: string
@@ -93,14 +96,19 @@ jobs:
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: version
+        if: ${{ inputs.version-command != '' }}
+        run: |
+          version=$(${{ inputs.version-command }})
+          echo "VERSION=${version}" >> $GITHUB_ENV
       - name: commit-build
-        if: ${{ inputs.commit-build }}
+        if: ${{ env.VERSION != '' && inputs.commit-build }}
         run: |
           git config --local user.email c332030-github-action-bot@c332030.com
           git config --local user.name c332030-github-action-bot
           git status
           git add .
-          git commit -am "commit-build"
+          git commit -am "chore: v${{ env.VERSION }}"
           git push origin ${{ env.BRANCH }}
       - name: deploy
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
