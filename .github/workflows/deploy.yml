@@ -109,6 +109,8 @@ jobs:
           git status
           git add .
           git commit -am "chore: v${{ env.VERSION }}"
+          git remote remove origin
+          git remote add origin git@github.com:${{ github.repository }}.git
           git push origin ${{ env.BRANCH }}
       - name: deploy
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
