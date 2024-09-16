@@ -99,6 +99,7 @@ jobs:
           git config --local user.email github-actions-bot@c332030.com
           git config --local user.name github-actions-bot
           git status
+          git add .
           git commit -am "commit-build"
           git remote add origin git@github.com:${{ github.repository }}.git
           git push origin ${{ env.BRANCH }}
