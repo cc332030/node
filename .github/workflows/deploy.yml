@@ -56,7 +56,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ !startsWith(github.event.head_commit.message, 'chore') }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -109,7 +108,7 @@ jobs:
           git config --local user.name c332030-github-action-bot
           git status
           git add .
-          git commit -am "chore: v${{ env.VERSION }}"
+          git commit -am "chore: v${{ env.VERSION }} [skip ci]"
           git remote remove origin
           git remote add origin git@github.com:${{ github.repository }}.git
           git push origin ${{ env.BRANCH }}
