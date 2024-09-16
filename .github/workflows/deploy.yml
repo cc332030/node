@@ -102,7 +102,7 @@ jobs:
           version=$(${{ inputs.version-command }})
           echo "VERSION=${version}" >> $GITHUB_ENV
       - name: commit-build
-        if: ${{ env.VERSION != '' && inputs.commit-build }}
+        if: ${{ inputs.commit-build && env.VERSION != '' }}
         run: |
           git config --local user.email c332030-github-action-bot@c332030.com
           git config --local user.name c332030-github-action-bot
