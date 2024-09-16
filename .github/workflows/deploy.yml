@@ -96,8 +96,8 @@ jobs:
       - name: commit-build
         if: ${{ inputs.commit-build }}
         run: |
-          git config --local user.email github-actions-bot@c332030.com
-          git config --local user.name github-actions-bot
+          git config --local user.email c332030-bot@c332030.com
+          git config --local user.name c332030-bot
           git status
           git add .
           git commit -am "commit-build"
