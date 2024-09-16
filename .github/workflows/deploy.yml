@@ -38,6 +38,10 @@ on:
       artifact-path:
         required: false
         type: string
+      commit-build:
+        required: false
+        type: string
+        default: false
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -70,14 +74,17 @@ jobs:
           version: ${{ inputs.pnpm-version }}
       - name: build
         run: ${{ inputs.build-command }}
+      - name: branch
+        run: |
+          echo "BRANCH=${{ github.head_ref || github.ref_name }}" >> $GITHUB_ENV
       - id: artifact-name
         name: artifact-name
         run: |
-          echo "artifact-name=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_OUTPUT
+          echo "ARTIFACT_NAME=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_ENV
       - name: upload-artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.artifact-name.outputs.artifact-name }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: ${{ inputs.artifact-path || inputs.origin-path }}
           retention-days: 7
       - name: init-ssh-pre
@@ -86,6 +93,15 @@ jobs:
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: commit-build
+        if: ${{ inputs.commit-build }}
+        run: |
+          git config --local user.email github-actions-bot@c332030.com
+          git config --local user.name github-actions-bot
+          git status
+          git commit -am "commit-build"
+          git remote add origin git@github.com:${{ github.repository }}.git
+          git push origin ${{ env.BRANCH }}
       - name: deploy
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
         timeout-minutes: 2
