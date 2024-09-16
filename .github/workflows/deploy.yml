@@ -80,10 +80,15 @@ jobs:
       - name: branch
         run: |
           echo "BRANCH=${{ github.head_ref || github.ref_name }}" >> $GITHUB_ENV
+      - name: version
+        if: ${{ inputs.version-command != '' }}
+        run: |
+          version=$(${{ inputs.version-command }})
+          echo "VERSION=${version}" >> $GITHUB_ENV
       - id: artifact-name
         name: artifact-name
         run: |
-          echo "ARTIFACT_NAME=${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}" >> $GITHUB_ENV
+          echo "ARTIFACT_NAME=${{ github.event.repository.name }}-${{ github.ref_name }}-${${{ env.VERSION }}:-${{ github.run_id }}}" >> $GITHUB_ENV
       - name: upload-artifact
         uses: actions/upload-artifact@v4
         with:
@@ -96,11 +101,17 @@ jobs:
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh.sh | sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: version
-        if: ${{ inputs.version-command != '' }}
-        run: |
-          version=$(${{ inputs.version-command }})
-          echo "VERSION=${version}" >> $GITHUB_ENV
+      - name: deploy
+        run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
+        timeout-minutes: 2
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+          ORIGIN_PATH: ${{ inputs.origin-path }}
+          REMOTE_PATH: ${{ inputs.remote-path }}
+          PREPARE_COMMAND: ${{ inputs.prepare-command }}
+          ACTION_COMMAND: ${{ inputs.action-command }}
+          MULTI_MODULE: ${{ inputs.multi-module }}
       - name: commit-build
         if: ${{ inputs.commit-build && env.VERSION != '' }}
         run: |
@@ -113,17 +124,6 @@ jobs:
           git remote add origin git@github.com:${{ github.repository }}.git
           git push origin ${{ env.BRANCH }}
         continue-on-error: true
-      - name: deploy
-        run: curl -sL https://github.com/cc332030/linux/raw/master/script/deploy/deploy.sh | sh
-        timeout-minutes: 2
-        env:
-          HOST: ${{ secrets.HOST }}
-          PORT: ${{ secrets.PORT }}
-          ORIGIN_PATH: ${{ inputs.origin-path }}
-          REMOTE_PATH: ${{ inputs.remote-path }}
-          PREPARE_COMMAND: ${{ inputs.prepare-command }}
-          ACTION_COMMAND: ${{ inputs.action-command }}
-          MULTI_MODULE: ${{ inputs.multi-module }}
       - name: init-ssh-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
