@@ -83,7 +83,7 @@ jobs:
       - name: version
         if: ${{ inputs.version-command != '' }}
         run: |
-          version=$(${{ inputs.version-command }})
+          version=v$(${{ inputs.version-command }})
           echo "VERSION=${version}" >> $GITHUB_ENV
       - id: artifact-name
         name: artifact-name
@@ -119,7 +119,7 @@ jobs:
           git config --local user.name c332030-github-action-bot
           git status
           git add .
-          git commit -am "chore: v${{ env.VERSION }} [skip ci]"
+          git commit -am "chore: ${{ env.VERSION }} [skip ci]"
           git remote remove origin
           git remote add origin git@github.com:${{ github.repository }}.git
           git push origin ${{ env.BRANCH }}
