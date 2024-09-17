@@ -69,17 +69,17 @@ jobs:
         run: |
           PACKAGE_MANAGER=$(node -e "process.stdout.write(process.argv[1].split(' ')[0])" "${{ inputs.build-command }}}")
           echo "PACKAGE_MANAGER=${PACKAGE_MANAGER}" >> $GITHUB_ENV
+      - name: setup-pnpm
+        if: ${{ 'pnpm' == env.PACKAGE_MANAGER }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ inputs.pnpm-version }}
       - name: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
           node-version-file: ${{ inputs.node-version-file }}
           cache: ${{ env.PACKAGE_MANAGER }}
-      - name: setup-pnpm
-        if: ${{ 'pnpm' == env.PACKAGE_MANAGER }}
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ inputs.pnpm-version }}
       - name: build
         run: ${{ inputs.build-command }}
       - name: version
