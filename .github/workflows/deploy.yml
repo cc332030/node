@@ -77,9 +77,6 @@ jobs:
           version: ${{ inputs.pnpm-version }}
       - name: build
         run: ${{ inputs.build-command }}
-      - name: branch
-        run: |
-          echo "BRANCH=${{ github.head_ref || github.ref_name }}" >> $GITHUB_ENV
       - name: version
         if: ${{ inputs.version-command != '' }}
         run: |
