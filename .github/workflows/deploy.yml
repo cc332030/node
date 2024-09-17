@@ -70,6 +70,7 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           node-version-file: ${{ inputs.node-version-file }}
+          cache: 'npm'
       - name: setup-pnpm
         if: ${{ startsWith(inputs.build-command, 'pnpm') }}
         uses: pnpm/action-setup@v4
