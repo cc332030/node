@@ -85,6 +85,16 @@ jobs:
         run: |
           version=v$(${{ inputs.version-command }})
           echo "VERSION=${version}" >> $GITHUB_ENV
+      - name: commit-build
+        if: ${{ inputs.commit-build && env.VERSION != '' }}
+        run: |
+          git config --local user.email c332030-github-action-bot@c332030.com
+          git config --local user.name c332030-github-action-bot
+          git status
+          git add .
+          git commit -am "chore: ${{ env.VERSION }} [skip ci]"
+          git push
+        continue-on-error: true
       - id: artifact-name
         name: artifact-name
         run: |
@@ -113,16 +123,6 @@ jobs:
           PREPARE_COMMAND: ${{ inputs.prepare-command }}
           ACTION_COMMAND: ${{ inputs.action-command }}
           MULTI_MODULE: ${{ inputs.multi-module }}
-      - name: commit-build
-        if: ${{ inputs.commit-build && env.VERSION != '' }}
-        run: |
-          git config --local user.email c332030-github-action-bot@c332030.com
-          git config --local user.name c332030-github-action-bot
-          git status
-          git add .
-          git commit -am "chore: ${{ env.VERSION }} [skip ci]"
-          git push
-        continue-on-error: true
       - name: init-ssh-clean
         if: ${{ always() }}
         run: curl -sL https://github.com/cc332030/linux/raw/master/script/init-ssh/init-ssh-clean.sh | sh
