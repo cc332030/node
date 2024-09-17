@@ -65,14 +65,18 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
             node_modules
+      - name: package-manager
+        run: |
+          PACKAGE_MANAGER=$(node -e "process.argv[1].split(' ')[0]" "${{ inputs.build-command }}}")
+          echo "PACKAGE_MANAGER=${PACKAGE_MANAGER}" >> $GITHUB_ENV
       - name: setup-node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
           node-version-file: ${{ inputs.node-version-file }}
-          cache: 'npm'
+          cache: ${{ env.PACKAGE_MANAGER }}
       - name: setup-pnpm
-        if: ${{ startsWith(inputs.build-command, 'pnpm') }}
+        if: ${{ 'pnpm' == env.PACKAGE_MANAGER }}
         uses: pnpm/action-setup@v4
         with:
           version: ${{ inputs.pnpm-version }}
