@@ -85,8 +85,8 @@ jobs:
       - name: version
         if: ${{ inputs.version-command != '' }}
         run: |
-          version=v$(${{ inputs.version-command }})
-          echo "VERSION=${version}" >> $GITHUB_ENV
+          VERSION=v$(${{ inputs.version-command }})
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
       - name: commit-build
         if: ${{ inputs.commit-build && env.VERSION != '' }}
         run: |
@@ -100,8 +100,8 @@ jobs:
       - id: artifact-name
         name: artifact-name
         run: |
-          version=${{ env.VERSION }}
-          echo "ARTIFACT_NAME=${{ github.event.repository.name }}.${{ github.ref_name }}.${version:-${{ github.run_id }}}" >> $GITHUB_ENV
+          VERSION=${{ env.VERSION }}
+          echo "ARTIFACT_NAME=${{ github.event.repository.name }}.${{ github.ref_name }}.${VERSION:-${{ github.run_id }}}" >> $GITHUB_ENV
       - name: upload-artifact
         uses: actions/upload-artifact@v4
         with:
