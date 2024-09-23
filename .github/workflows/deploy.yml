@@ -66,6 +66,8 @@ jobs:
           path: |
             node_modules
             ~/.local/share
+            ~/.config
+            ~/.cache
             ~/.volta
             ~/.npm
             ~/.yarn
