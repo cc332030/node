@@ -65,7 +65,11 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
             node_modules
+            ~/.local/share
+            ~/.volta
             ~/.npm
+            ~/.yarn
+            ~/.pnpm-store
       - name: setup-node
         uses: actions/setup-node@v4
         with:
