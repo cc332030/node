@@ -70,11 +70,6 @@ jobs:
             ~/.npm
             ~/.yarn
             ~/.pnpm-store
-      - name: setup-node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ inputs.node-version }}
-          node-version-file: ${{ inputs.node-version-file }}
       - name: package-manager
         run: |
           PACKAGE_MANAGER=$(node -e "process.stdout.write(process.argv[1].split(' ')[0])" "${{ inputs.build-command }}}")
@@ -84,6 +79,16 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: ${{ inputs.pnpm-version }}
+      - name: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          node-version-file: ${{ inputs.node-version-file }}
+          cache: ${{ env.PACKAGE_MANAGER }}
+          cache-dependency-path: |
+            '**/package-lock.json'
+            '**/yarn.lock'
+            '**/pnpm-lock.yaml'
       - name: build
         run: ${{ inputs.build-command }}
       - name: version
