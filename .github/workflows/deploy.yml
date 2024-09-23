@@ -85,10 +85,6 @@ jobs:
           node-version: ${{ inputs.node-version }}
           node-version-file: ${{ inputs.node-version-file }}
           cache: ${{ env.PACKAGE_MANAGER }}
-          cache-dependency-path: |
-            '**/package-lock.json'
-            '**/yarn.lock'
-            '**/pnpm-lock.yaml'
       - name: build
         run: ${{ inputs.build-command }}
       - name: version
