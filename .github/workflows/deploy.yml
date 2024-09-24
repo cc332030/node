@@ -64,8 +64,10 @@ jobs:
         with:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package.json','**/package-lock.json', '**/pnpm-lock.yaml') }}
           path: |
+            node_modules
             '**/node_modules'
-#            '**/.pnp.cjs'
+            .pnp.cjs
+            '**/.pnp.cjs'
       - name: setup-node
         uses: actions/setup-node@v4
         with:
