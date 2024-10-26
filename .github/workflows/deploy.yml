@@ -95,6 +95,7 @@ jobs:
           git status
           git add .
           git commit -am "chore: ${{ env.VERSION }} [skip ci]"
+          git pull
           git push
         continue-on-error: true
       - id: artifact-name
