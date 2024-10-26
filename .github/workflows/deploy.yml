@@ -92,7 +92,6 @@ jobs:
         run: |
           git config --local user.email c332030-github-action-bot@c332030.com
           git config --local user.name c332030-github-action-bot
-          git pull
           git status
           git add .
           git commit -am "chore: ${{ env.VERSION }} [skip ci]"
