@@ -8,7 +8,6 @@ call link-file %DATA_PATH% %userprofile% npmrc .npmrc
 
 set PNPM_HOME=%userprofile%\AppData\Local\pnpm
 
-call link-dir %CURRENT_DIR%\config %PNPM_HOME%\config
-call link-dir %CURRENT_DIR%\store %PNPM_HOME%\store
+call link-dir %CURRENT_DIR% %PNPM_HOME%
 
 pause
