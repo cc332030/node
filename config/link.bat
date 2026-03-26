@@ -4,7 +4,7 @@
 
 set CURRENT_DIR=%~dp0
 
-call link-file %DATA_PATH% %userprofile% npmrc .npmrc
+call link-file %CURRENT_DIR%\config %userprofile% npmrc .npmrc
 
 set PNPM_HOME=%userprofile%\AppData\Local\pnpm
 
