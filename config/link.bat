@@ -9,5 +9,6 @@ call link-file %CURRENT_DIR%\config %userprofile% npmrc .npmrc
 set PNPM_HOME=%userprofile%\AppData\Local\pnpm
 
 call link-dir %CURRENT_DIR% %PNPM_HOME%
+call link-dir %CURRENT_DIR%\store %userprofile%\pnpm-store
 
 pause
